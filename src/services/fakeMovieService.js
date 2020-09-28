@@ -64,6 +64,13 @@ const movies = [
     genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
     numberInStock: 7,
     dailyRentalRate: 3.5
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd471234",
+    title: "The Ramayana",
+    genre: { _id: "5b21ca3eeb7f6fbccd471432", name: "Novel" },
+    numberInStock: 9,
+    dailyRentalRate: 9.9
   }
 ];
 
