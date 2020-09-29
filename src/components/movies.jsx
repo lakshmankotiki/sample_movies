@@ -7,19 +7,20 @@ class Movie extends React.Component {
         movies: fakeMoviAPI.getMovies()
     };
 
-    handleClick = (id) => {
-        let deletedMovie = fakeMoviAPI.deleteMovie(id);
-        window.alert("You're deleting " +deletedMovie.title);
-        // telling the react to we've updated state
-        this.setState({movies: fakeMoviAPI.getMovies()});
+    handleClick = (movie) => {
+        const movies = this.state.movies.filter(m => m._id !== movie._id);
+        this.setState({movies: movies});
     }
 
     render() {
+        const { length: count } = this.state.movies;
+        // conditional rendering and showing messages
+        if(count === 0)
+            return <p>There are no movies in the database</p>
         return(
             <main className="container">
                 <h1 className="text-center font-italic text-success"><u>Movies Application</u></h1>
-                {/* conditional rendering and displaying movies count based on condition */}
-                <p>{this.state.movies.length === 0 ? `There are no movies in the database` : `Showing ${this.state.movies.length} in the database`}</p>
+                <p>{`There are ${count} movies in the database`}</p>
                 <table className="table">
                     <thead>
                         <tr>
@@ -27,6 +28,7 @@ class Movie extends React.Component {
                         <th scope="col">Genre</th>
                         <th scope="col">Stock</th>
                         <th scope="col">Rate</th>
+                        <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,13 +36,13 @@ class Movie extends React.Component {
                         {this.state.movies.map(movie => {
                             return(
                                 // giving unique key while doing map
-                                <tr key={ movie.title }>
-                                    <td>{ movie.title }</td>
-                                    <td>{ movie.genre.name }</td>
-                                    <td>{ movie.numberInStock }</td>
-                                    <td>{ movie.dailyRentalRate }</td>
+                                <tr key={movie.title}>
+                                    <td>{movie.title}</td>
+                                    <td>{movie.genre.name}</td>
+                                    <td>{movie.numberInStock}</td>
+                                    <td>{movie.dailyRentalRate}</td>
                                     {/* button and onclick handler */}
-                                    <td><button type="button" className="btn btn-danger mt-2" onClick={this.handleClick.bind(this, movie._id)}>Delete</button></td>
+                                    <td><button type="button" className="btn btn-danger" onClick={() => this.handleClick(movie)}>Delete</button></td>
                                 </tr>
                             )
                         })};
